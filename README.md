@@ -42,7 +42,7 @@ Learn more in the [official documentation](https://autoscrape-labs.github.io/pyd
 
 In this section, you'll discover how to utilize Pydoll to extract data from the asynchronous, JavaScript-powered version of "[Quotes to Scrape](https://quotes.toscrape.com/js-delayed/?delay=2000)":
 
-![The target site loading the data after 2 seconds](https://media.brightdata.com/2025/04/The-target-site-loading-the-data-after-2-seconds.gif)
+![The target site loading the data after 2 seconds](https://github.com/luminati-io/web-scraping-with-pydoll/blob/main/images/The-target-site-loading-the-data-after-2-seconds.gif)
 
 This webpage dynamically renders quote elements using JavaScript after a brief delay. Consequently, conventional scraping tools won't function properly. To extract content from this page, you need a browser automation solution like Pydoll.
 
@@ -69,7 +69,7 @@ Open the project folder in your preferred Python IDE. [Visual Studio Code with t
 
 Create a `scraper.py` file in the project folder, which should now contain:
 
-![The project file structure for web scraping with Pydoll](https://media.brightdata.com/2025/04/The-project-file-structure-for-web-scraping-with-Pydoll.png)
+![The project file structure for web scraping with Pydoll](https://github.com/luminati-io/web-scraping-with-pydoll/blob/main/images/The-project-file-structure-for-web-scraping-with-Pydoll.png)
 
 At this point, `scraper.py` is just an empty Python script, but it will soon contain the [data parsing logic](https://brightdata.com/blog/web-data/what-is-data-parsing).
 
@@ -133,7 +133,7 @@ Now, try executing the above script. If everything works correctly, Pydoll will:
 
 This is what you should briefly see before it closes:
 
-![The target page being loaded by the Chrome instance controlled by Pydoll](https://media.brightdata.com/2025/04/The-target-page-being-loaded-by-the-Chrome-instance-controlled-by-Pydoll.png)
+![The target page being loaded by the Chrome instance controlled by Pydoll](https://github.com/luminati-io/web-scraping-with-pydoll/blob/main/images/The-target-page-being-loaded-by-the-Chrome-instance-controlled-by-Pydoll.png)
 
 ### Step #4: Wait for the HTML Elements to Appear
 
@@ -151,7 +151,7 @@ This method supports CSS selectors, XPath expressions, and more—similar to how
 
 Let's study the HTML structure of the target page. Open it in your browser, wait for the quotes to load, right-click one of the quotes, and select the "Inspect" option:
 
-![The HTML of the quote elements](https://media.brightdata.com/2025/04/The-HTML-of-the-quote-elements.png)
+![The HTML of the quote elements](https://github.com/luminati-io/web-scraping-with-pydoll/blob/main/images/The-HTML-of-the-quote-elements.png)
 
 In the DevTools panel, you'll observe that each quote is wrapped in a `<div>` with the class `quote`. This means you can target them using the CSS selector:
 
@@ -205,7 +205,7 @@ for quote_element in quote_elements:
 
 Begin by examining a single quote element:
 
-![The HTML of a quote element](https://media.brightdata.com/2025/04/The-HTML-of-a-quote-element.png)
+![The HTML of a quote element](https://github.com/luminati-io/web-scraping-with-pydoll/blob/main/images/The-HTML-of-a-quote-element.png)
 
 As evident from the HTML above, each quote element contains:
 
@@ -342,7 +342,7 @@ python scraper.py
 
 Once completed, a `quotes.csv` file will appear in your project folder.
 
-![The output data in quotes.csv](https://media.brightdata.com/2025/04/The-output-data-in-the-quotes-csv.png)
+![The output data in quotes.csv](https://github.com/luminati-io/web-scraping-with-pydoll/blob/main/images/The-output-data-in-the-quotes-csv.png)
 
 ## Bypassing Cloudflare With Pydoll
 
@@ -354,7 +354,7 @@ When your requests are identified as coming from an automated browser, these sys
 
 To demonstrate this functionality, we'll use the "[Antibot Challenge](https://www.scrapingcourse.com/antibot-challenge)" test page from the ScrapingCourse website:
 
-![Automatic Cloudflare verification on the target page](https://media.brightdata.com/2025/04/Automatic-Cloudflare-verification-on-the-target-page.gif)
+![Automatic Cloudflare verification on the target page](https://github.com/luminati-io/web-scraping-with-pydoll/blob/main/images/Automatic-Cloudflare-verification-on-the-target-page.gif)
 
 As shown, the page consistently performs the [Cloudflare JavaScript Challenge](https://hackernoon.com/bypassing-javascript-challenges-for-effective-web-scraping). After bypassing it, sample content appears confirming that the anti-bot protection has been defeated.
 
@@ -477,29 +477,29 @@ Let's implement Bright Data's residential proxies with Pydoll.
 
 If you don't have an account yet, [register for Bright Data](https://brightdata.com/cp/start). Otherwise, proceed and sign in to access your dashboard:
 
-![The Bright Data dashboard](https://media.brightdata.com/2025/04/The-Bright-Data-dashboard-1.png)
+![The Bright Data dashboard](https://github.com/luminati-io/web-scraping-with-pydoll/blob/main/images/The-Bright-Data-dashboard-1.png)
 
 From the dashboard, select the "Get proxy products" button:
 
-![Get proxy products](https://media.brightdata.com/2025/04/Clicking-the-Get-proxy-products-button.png)
+![Get proxy products](https://github.com/luminati-io/web-scraping-with-pydoll/blob/main/images/Clicking-the-Get-proxy-products-button.png)
 
 You'll be directed to the "Proxies & Scraping Infrastructure" page:
 
-![The "Proxies & Scraping Infrastructure" page](https://media.brightdata.com/2025/04/The-Proxies-Scraping-Infrastructure-page-1.png)
+![The "Proxies & Scraping Infrastructure" page](https://github.com/luminati-io/web-scraping-with-pydoll/blob/main/images/The-Proxies-Scraping-Infrastructure-page-1.png)
 
 In the table, locate the "Residential" row and click it:
 
-![Clicking the "residential" row](https://media.brightdata.com/2025/04/Clicking-the-residential-row.png)
+![Clicking the "residential" row](https://github.com/luminati-io/web-scraping-with-pydoll/blob/main/images/Clicking-the-residential-row.png)
 
 You'll arrive at the residential proxy configuration page:
 
-![The "residential" page](https://media.brightdata.com/2025/04/The-residential-page.png)
+![The "residential" page](https://github.com/luminati-io/web-scraping-with-pydoll/blob/main/images/The-residential-page.png)
 
 For first-time users, follow the setup wizard to configure the proxy according to your requirements.
 
 Navigate to the "Overview" tab and find your proxy's host, port, username, and password:
 
-![The proxy credentials](https://media.brightdata.com/2025/04/The-proxy-credentials.png)
+![The proxy credentials](https://github.com/luminati-io/web-scraping-with-pydoll/blob/main/images/The-proxy-credentials.png)
 
 Utilize those details to construct your proxy URL:
 
@@ -511,7 +511,7 @@ Replace the placeholders (`<brightdata_proxy_username>`, `<brightdata_proxy_pass
 
 Ensure you activate the proxy product by switching the toggle from "Off" to "On":
 
-![Clicking the activation toggle](https://media.brightdata.com/2025/04/Clicking-the-activation-toggle.png)
+![Clicking the activation toggle](https://github.com/luminati-io/web-scraping-with-pydoll/blob/main/images/Clicking-the-activation-toggle.png)
 
 With your proxy configured, here's how to incorporate it into Pydoll using its [built-in proxy configuration capabilities](https://autoscrape-labs.github.io/pydoll/features/#proxy-integration):
 
