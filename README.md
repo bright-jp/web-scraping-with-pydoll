@@ -1,6 +1,6 @@
 # PydollでのWebスクレイピング
 
-[![Bright Data Promo](https://github.com/luminati-io/LinkedIn-Scraper/raw/main/Proxies%20and%20scrapers%20GitHub%20bonus%20banner.png)](https://brightdata.jp/)
+[![Bright Data Promo](https://github.com/bright-jp/LinkedIn-Scraper/raw/main/Proxies%20and%20scrapers%20GitHub%20bonus%20banner.png)](https://brightdata.jp/)
 
 このガイドでは、Pydollを使用してJavaScriptが多用されたWebサイトをスクレイピングし、Cloudflareをバイパスし、Bright Dataのようなローテーティングプロキシでスケールさせる方法を解説します。
 
@@ -42,7 +42,7 @@
 
 このセクションでは、非同期でJavaScript駆動の「[Quotes to Scrape](https://quotes.toscrape.com/js-delayed/?delay=2000)」からデータを抽出するためにPydollを活用する方法をご紹介します。
 
-![The target site loading the data after 2 seconds](https://github.com/luminati-io/web-scraping-with-pydoll/blob/main/images/The-target-site-loading-the-data-after-2-seconds.gif)
+![The target site loading the data after 2 seconds](https://github.com/bright-jp/web-scraping-with-pydoll/blob/main/images/The-target-site-loading-the-data-after-2-seconds.gif)
 
 このWebページは、短い遅延の後にJavaScriptを使ってquote要素を動的にレンダリングします。そのため、従来のスクレイピングツールでは正しく動作しません。このページからコンテンツを抽出するには、Pydollのようなブラウザ自動化ソリューションが必要です。
 
@@ -69,7 +69,7 @@ python -m venv venv
 
 プロジェクトフォルダに`scraper.py`ファイルを作成します。フォルダ構成は次のようになります。
 
-![The project file structure for web scraping with Pydoll](https://github.com/luminati-io/web-scraping-with-pydoll/blob/main/images/The-project-file-structure-for-web-scraping-with-Pydoll.png)
+![The project file structure for web scraping with Pydoll](https://github.com/bright-jp/web-scraping-with-pydoll/blob/main/images/The-project-file-structure-for-web-scraping-with-Pydoll.png)
 
 この時点で`scraper.py`は空のPythonスクリプトですが、まもなく[データパースのロジック](https://brightdata.jp/blog/web-data/what-is-data-parsing)を含むようになります。
 
@@ -133,7 +133,7 @@ await page.go_to("https://quotes.toscrape.com/js-delayed/?delay=2000")
 
 閉じる直前に、次のような画面が一瞬表示されるはずです。
 
-![The target page being loaded by the Chrome instance controlled by Pydoll](https://github.com/luminati-io/web-scraping-with-pydoll/blob/main/images/The-target-page-being-loaded-by-the-Chrome-instance-controlled-by-Pydoll.png)
+![The target page being loaded by the Chrome instance controlled by Pydoll](https://github.com/bright-jp/web-scraping-with-pydoll/blob/main/images/The-target-page-being-loaded-by-the-Chrome-instance-controlled-by-Pydoll.png)
 
 ### Step #4: HTML要素が表示されるのを待つ
 
@@ -151,7 +151,7 @@ await page.go_to("https://quotes.toscrape.com/js-delayed/?delay=2000")
 
 対象ページのHTML構造を確認しましょう。ブラウザで開いてquotesが読み込まれるのを待ち、いずれかのquoteを右クリックして「Inspect」を選択します。
 
-![The HTML of the quote elements](https://github.com/luminati-io/web-scraping-with-pydoll/blob/main/images/The-HTML-of-the-quote-elements.png)
+![The HTML of the quote elements](https://github.com/bright-jp/web-scraping-with-pydoll/blob/main/images/The-HTML-of-the-quote-elements.png)
 
 DevToolsパネルでは、各quoteが`quote`クラスを持つ`<div>`にラップされていることが分かります。つまり、次のCSSセレクタで対象にできます。
 
@@ -205,7 +205,7 @@ for quote_element in quote_elements:
 
 まず、単一のquote要素を確認します。
 
-![The HTML of a quote element](https://github.com/luminati-io/web-scraping-with-pydoll/blob/main/images/The-HTML-of-a-quote-element.png)
+![The HTML of a quote element](https://github.com/bright-jp/web-scraping-with-pydoll/blob/main/images/The-HTML-of-a-quote-element.png)
 
 上のHTMLから分かるとおり、各quote要素には次が含まれます。
 
@@ -342,7 +342,7 @@ python scraper.py
 
 完了すると、プロジェクトフォルダ内に`quotes.csv`ファイルが生成されます。
 
-![The output data in quotes.csv](https://github.com/luminati-io/web-scraping-with-pydoll/blob/main/images/The-output-data-in-the-quotes-csv.png)
+![The output data in quotes.csv](https://github.com/bright-jp/web-scraping-with-pydoll/blob/main/images/The-output-data-in-the-quotes-csv.png)
 
 ## PydollでCloudflareをバイパスする
 
@@ -354,7 +354,7 @@ python scraper.py
 
 この機能をデモするために、ScrapingCourseサイトの「[Antibot Challenge](https://www.scrapingcourse.com/antibot-challenge)」テストページを使用します。
 
-![Automatic Cloudflare verification on the target page](https://github.com/luminati-io/web-scraping-with-pydoll/blob/main/images/Automatic-Cloudflare-verification-on-the-target-page.gif)
+![Automatic Cloudflare verification on the target page](https://github.com/bright-jp/web-scraping-with-pydoll/blob/main/images/Automatic-Cloudflare-verification-on-the-target-page.gif)
 
 表示されているとおり、このページは一貫して[Cloudflare JavaScript Challenge](https://hackernoon.com/bypassing-javascript-challenges-for-effective-web-scraping)を実行します。バイパス後、アンチボット保護が突破されたことを確認できるサンプルコンテンツが表示されます。
 
@@ -477,29 +477,29 @@ PydollでBright Dataのレジデンシャルプロキシを実装しましょう
 
 まだアカウントをお持ちでない場合は、[Bright Dataに登録](https://brightdata.jp/cp/start)してください。すでにある場合は、サインインしてダッシュボードにアクセスします。
 
-![The Bright Data dashboard](https://github.com/luminati-io/web-scraping-with-pydoll/blob/main/images/The-Bright-Data-dashboard-1.png)
+![The Bright Data dashboard](https://github.com/bright-jp/web-scraping-with-pydoll/blob/main/images/The-Bright-Data-dashboard-1.png)
 
 ダッシュボードから「Get proxy products」ボタンを選択します。
 
-![Get proxy products](https://github.com/luminati-io/web-scraping-with-pydoll/blob/main/images/Clicking-the-Get-proxy-products-button.png)
+![Get proxy products](https://github.com/bright-jp/web-scraping-with-pydoll/blob/main/images/Clicking-the-Get-proxy-products-button.png)
 
 「Proxies & Scraping Infrastructure」ページに移動します。
 
-![The "Proxies & Scraping Infrastructure" page](https://github.com/luminati-io/web-scraping-with-pydoll/blob/main/images/The-Proxies-Scraping-Infrastructure-page-1.png)
+![The "Proxies & Scraping Infrastructure" page](https://github.com/bright-jp/web-scraping-with-pydoll/blob/main/images/The-Proxies-Scraping-Infrastructure-page-1.png)
 
 表の中で「Residential」行を見つけてクリックします。
 
-![Clicking the "residential" row](https://github.com/luminati-io/web-scraping-with-pydoll/blob/main/images/Clicking-the-residential-row.png)
+![Clicking the "residential" row](https://github.com/bright-jp/web-scraping-with-pydoll/blob/main/images/Clicking-the-residential-row.png)
 
 レジデンシャルプロキシの設定ページに移動します。
 
-![The "residential" page](https://github.com/luminati-io/web-scraping-with-pydoll/blob/main/images/The-residential-page.png)
+![The "residential" page](https://github.com/bright-jp/web-scraping-with-pydoll/blob/main/images/The-residential-page.png)
 
 初回利用者は、セットアップウィザードに従って要件に応じてプロキシを設定してください。
 
 「Overview」タブに移動し、プロキシのhost、port、username、passwordを確認します。
 
-![The proxy credentials](https://github.com/luminati-io/web-scraping-with-pydoll/blob/main/images/The-proxy-credentials.png)
+![The proxy credentials](https://github.com/bright-jp/web-scraping-with-pydoll/blob/main/images/The-proxy-credentials.png)
 
 それらの情報を使ってプロキシURLを構築します。
 
@@ -511,7 +511,7 @@ proxy_url = "<brightdata_proxy_username>:<brightdata_proxy_password>@<brightdata
 
 トグルを「Off」から「On」に切り替えて、プロキシプロダクトを有効化してください。
 
-![Clicking the activation toggle](https://github.com/luminati-io/web-scraping-with-pydoll/blob/main/images/Clicking-the-activation-toggle.png)
+![Clicking the activation toggle](https://github.com/bright-jp/web-scraping-with-pydoll/blob/main/images/Clicking-the-activation-toggle.png)
 
 プロキシの設定ができたら、Pydollの[組み込みプロキシ設定機能](https://autoscrape-labs.github.io/pydoll/features/#proxy-integration)を使って統合する方法は次のとおりです。
 
