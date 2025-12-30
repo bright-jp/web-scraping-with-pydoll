@@ -1,101 +1,101 @@
-# Web Scraping with Pydoll
+# PydollでのWebスクレイピング
 
-[![Bright Data Promo](https://github.com/luminati-io/LinkedIn-Scraper/raw/main/Proxies%20and%20scrapers%20GitHub%20bonus%20banner.png)](https://brightdata.com/)
+[![Bright Data Promo](https://github.com/luminati-io/LinkedIn-Scraper/raw/main/Proxies%20and%20scrapers%20GitHub%20bonus%20banner.png)](https://brightdata.jp/)
 
-This guide explains how to use Pydoll for scraping JavaScript-heavy websites, bypass Cloudflare, and scale with rotating proxies like Bright Data.
+このガイドでは、Pydollを使用してJavaScriptが多用されたWebサイトをスクレイピングし、Cloudflareをバイパスし、Bright Dataのようなローテーティングプロキシでスケールさせる方法を解説します。
 
-- [An Introduction to Pydoll](#an-introduction-to-pydoll)
-- [Using Pydoll for Web Scraping: Complete Tutorial](#using-pydoll-for-web-scraping-complete-tutorial)
-- [Bypassing Cloudflare With Pydoll](#bypassing-cloudflare-with-pydoll)
-- [Limitations of This Approach to Web Scraping](#limitations-of-this-approach-to-web-scraping)
-- [Integrating Pydoll with Bright Data's Rotating Proxies](#integrating-pydoll-with-bright-datas-rotating-proxies)
-- [Alternatives to Pydoll for Web Scraping](#alternatives-to-pydoll-for-web-scraping)
+- [Pydollの紹介](#an-introduction-to-pydoll)
+- [WebスクレイピングでPydollを使う：完全チュートリアル](#using-pydoll-for-web-scraping-complete-tutorial)
+- [PydollでCloudflareをバイパスする](#bypassing-cloudflare-with-pydoll)
+- [このWebスクレイピング手法の制限](#limitations-of-this-approach-to-web-scraping)
+- [PydollとBright Dataのローテーティングプロキシの統合](#integrating-pydoll-with-bright-datas-rotating-proxies)
+- [WebスクレイピングにおけるPydollの代替手段](#alternatives-to-pydoll-for-web-scraping)
 
-## An Introduction to Pydoll
+## Pydollの紹介
 
-This guide only explains the basics of Pydoll. You can learn more about its functionality and what makes it stand out as a Python web scraping library in [this blog post](https://brightdata.com/blog/web-data/python-web-scraping-libraries).
+このガイドではPydollの基本のみを説明します。機能の詳細や、PythonのWebスクレイピングライブラリとして際立っている点については、[こちらのブログ記事](https://brightdata.jp/blog/web-data/python-web-scraping-libraries)で詳しく学べます。
 
-### What It Is
+### これは何ですか
 
-[Pydoll](https://autoscrape-labs.github.io/pydoll/) is a Python browser automation library built for web scraping, testing, and automating repetitive tasks. What sets it apart is that it eliminates the need for traditional web drivers. In detail, it connects directly to browsers through the DevTools Protocol—no external dependencies required.
+[Pydoll](https://autoscrape-labs.github.io/pydoll/)は、Webスクレイピング、テスト、反復的なタスクの自動化のために構築されたPythonのブラウザ自動化ライブラリです。特徴的なのは、従来のWeb driverが不要である点です。具体的には、DevTools Protocolを介してブラウザに直接接続するため、外部依存関係が不要です。
 
-### Features
+### 機能
 
-- **Zero webdrivers**: No browser driver dependency for easier setup and fewer version issues.
-- **Async-first**: Fully asynchronous, built on `asyncio` for high concurrency and efficiency.
-- **Human-like interactions**: Realistic typing, mouse movements, and clicks to evade bot detection.
-- **Event-driven**: React to browser, DOM, network, and lifecycle events in real-time.
-- **Multi-browser support**: Works with Chrome, Edge, and other Chromium browsers via a unified API.
-- **Screenshot & PDF export**: Capture pages or elements, and generate high-quality PDFs.
-- **Native Cloudflare bypass**: Bypass Cloudflare without third-party tools (given good IP reputation).
-- **Concurrent scraping**: Scrape multiple pages/sites in parallel to speed up tasks.
-- **Advanced keyboard control**: Simulate real typing with control over keys and timing.
-- **Powerful event system**: Monitor and handle network and page events dynamically.
-- **File upload support**: Automate uploads via inputs or file chooser dialogs.
-- **Proxy integration**: Rotate IPs and geotarget using proxies.
-- **Request interception**: Intercept, modify, or block HTTP requests and responses.
+- **Web driver不要**: ブラウザドライバーへの依存がなく、セットアップが容易で、バージョン問題も少なくなります。
+- **Async-first**: `asyncio`上に構築された完全非同期で、高い同時接続と効率を実現します。
+- **人間らしい操作**: ボット検知を回避するために、現実的なタイピング、マウス移動、クリックを行います。
+- **イベント駆動**: ブラウザ、DOM、ネットワーク、ライフサイクルイベントにリアルタイムで反応します。
+- **マルチブラウザ対応**: 統一されたAPIでChrome、Edge、その他のChromiumブラウザで動作します。
+- **スクリーンショット＆PDF出力**: ページや要素をキャプチャし、高品質なPDFを生成します。
+- **Cloudflareのネイティブバイパス**: サードパーティツールなしでCloudflareをバイパスします（良好なIPレピュテーションが前提です）。
+- **同時スクレイピング**: 複数ページ/サイトを並列にスクレイピングし、タスクを高速化します。
+- **高度なキーボード制御**: キーやタイミングを制御して実際のタイピングをシミュレートします。
+- **強力なイベントシステム**: ネットワークとページのイベントを動的に監視・処理します。
+- **ファイルアップロード対応**: inputやファイル選択ダイアログ経由でアップロードを自動化します。
+- **プロキシ統合**: プロキシを使用してIPをローテーションし、ジオターゲティングします。
+- **リクエストのインターセプト**: HTTPリクエスト/レスポンスをインターセプトし、変更またはブロックします。
 
-Learn more in the [official documentation](https://autoscrape-labs.github.io/pydoll/features/).
+詳細は[公式ドキュメント](https://autoscrape-labs.github.io/pydoll/features/)をご覧ください。
 
 
-## Using Pydoll for Web Scraping: Complete Tutorial
+## WebスクレイピングでPydollを使う：完全チュートリアル
 
-In this section, you'll discover how to utilize Pydoll to extract data from the asynchronous, JavaScript-powered version of "[Quotes to Scrape](https://quotes.toscrape.com/js-delayed/?delay=2000)":
+このセクションでは、非同期でJavaScript駆動の「[Quotes to Scrape](https://quotes.toscrape.com/js-delayed/?delay=2000)」からデータを抽出するためにPydollを活用する方法をご紹介します。
 
 ![The target site loading the data after 2 seconds](https://github.com/luminati-io/web-scraping-with-pydoll/blob/main/images/The-target-site-loading-the-data-after-2-seconds.gif)
 
-This webpage dynamically renders quote elements using JavaScript after a brief delay. Consequently, conventional scraping tools won't function properly. To extract content from this page, you need a browser automation solution like Pydoll.
+このWebページは、短い遅延の後にJavaScriptを使ってquote要素を動的にレンダリングします。そのため、従来のスクレイピングツールでは正しく動作しません。このページからコンテンツを抽出するには、Pydollのようなブラウザ自動化ソリューションが必要です。
 
-### Step #1: Project Setup
+### Step #1: プロジェクトのセットアップ
 
-Before you start, ensure you have Python 3+ installed on your system. If not, [download it](https://www.python.org/downloads/) and follow the installation guide.
+開始する前に、システムにPython 3+がインストールされていることを確認してください。未インストールの場合は、[ダウンロード](https://www.python.org/downloads/)してインストールガイドに従ってください。
 
-Next, run this command to create a directory for your scraping project:
+次に、スクレイピングプロジェクト用のディレクトリを作成するために、このコマンドを実行します。
 
 ```sh
 mkdir pydoll-scraper
 ```
 
-The `pydoll-scraper` folder will serve as your project directory.
+`pydoll-scraper`フォルダがプロジェクトディレクトリになります。
 
-Navigate to the folder in your terminal and initialize a Python [virtual environment](https://docs.python.org/3/library/venv.html) within it:
+ターミナルでそのフォルダに移動し、Pythonの[virtual environment](https://docs.python.org/3/library/venv.html)を初期化します。
 
 ```sh
 cd pydoll-scraper
 python -m venv venv
 ```
 
-Open the project folder in your preferred Python IDE. [Visual Studio Code with the Python extension](https://code.visualstudio.com/docs/languages/python) or [PyCharm Community Edition](https://www.jetbrains.com/pycharm/download/#section=windows) are excellent choices.
+任意のPython IDEでプロジェクトフォルダを開きます。[Python拡張機能付きのVisual Studio Code](https://code.visualstudio.com/docs/languages/python)または[PyCharm Community Edition](https://www.jetbrains.com/pycharm/download/#section=windows)がおすすめです。
 
-Create a `scraper.py` file in the project folder, which should now contain:
+プロジェクトフォルダに`scraper.py`ファイルを作成します。フォルダ構成は次のようになります。
 
 ![The project file structure for web scraping with Pydoll](https://github.com/luminati-io/web-scraping-with-pydoll/blob/main/images/The-project-file-structure-for-web-scraping-with-Pydoll.png)
 
-At this point, `scraper.py` is just an empty Python script, but it will soon contain the [data parsing logic](https://brightdata.com/blog/web-data/what-is-data-parsing).
+この時点で`scraper.py`は空のPythonスクリプトですが、まもなく[データパースのロジック](https://brightdata.jp/blog/web-data/what-is-data-parsing)を含むようになります。
 
-Next, activate the virtual environment in your IDE's terminal. On Linux or macOS, execute:
+次に、IDEのターミナルでvirtual environmentを有効化します。LinuxまたはmacOSでは次を実行します。
 
 ```sh
 source venv/bin/activate
 ```
 
-Similarly, on Windows, run:
+同様にWindowsでは次を実行します。
 
 ```sh
 venv/Scripts/activate
 ```
 
-Great! Your Python environment is now configured for web scraping with Pydoll.
+これで、PydollでWebスクレイピングを行うためのPython環境が設定できました。
 
-### Step #2: Set Up Pydoll
+### Step #2: Pydollのセットアップ
 
-In your activated virtual environment, install Pydoll through the [`pydoll-python`](https://pypi.org/project/pydoll-python/) package:
+有効化したvirtual environmentで、[`pydoll-python`](https://pypi.org/project/pydoll-python/)パッケージを通じてPydollをインストールします。
 
 ```sh
 pip install pydoll-python
 ```
 
-Now, add the following code to the `scraper.py` file to begin using Pydoll:
+次に、Pydollの利用を開始するために、以下のコードを`scraper.py`ファイルに追加します。
 
 ```python
 import asyncio
@@ -113,107 +113,107 @@ async def main():
 asyncio.run(main())
 ```
 
-Note that Pydoll provides an asynchronous API for web scraping and requires the use of Python's [`asyncio`](https://docs.python.org/3/library/asyncio.html) standard library.
+PydollはWebスクレイピング向けに非同期APIを提供しており、Python標準ライブラリの[`asyncio`](https://docs.python.org/3/library/asyncio.html)を使用する必要がある点に注意してください。
 
-### Step #3: Connect to the Target Site
+### Step #3: 対象サイトに接続する
 
-Invoke the [`go_to()`](https://autoscrape-labs.github.io/pydoll/deep-dive/page-domain/#navigation-system) method available through the `page` object to browse to the target website:
+`page`オブジェクトから利用できる[`go_to()`](https://autoscrape-labs.github.io/pydoll/deep-dive/page-domain/#navigation-system)メソッドを呼び出して、対象Webサイトにアクセスします。
 
 ```python
 await page.go_to("https://quotes.toscrape.com/js-delayed/?delay=2000")
 ```
 
-The `?delay=2000` query parameter instructs the page to load the desired data dynamically after a 2-second delay. This is a feature of the target sandbox site, designed to help test dynamic scraping behavior.
+`?delay=2000`クエリパラメータは、2秒の遅延後に目的のデータを動的に読み込むようページに指示します。これは対象のサンドボックスサイトの機能で、動的スクレイピングの挙動をテストできるよう設計されています。
 
-Now, try executing the above script. If everything works correctly, Pydoll will:
+ここで上記スクリプトを実行してみてください。すべてが正しく動作していれば、Pydollは次を行います。
 
-1.  Launch a Chrome instance
-2.  Navigate to the target site
-3.  Close the browser window immediately—since there's no additional logic in the script yet
+1.  Chromeインスタンスを起動する
+2.  対象サイトに移動する
+3.  まだ追加ロジックがないため、ブラウザウィンドウをすぐに閉じる
 
-This is what you should briefly see before it closes:
+閉じる直前に、次のような画面が一瞬表示されるはずです。
 
 ![The target page being loaded by the Chrome instance controlled by Pydoll](https://github.com/luminati-io/web-scraping-with-pydoll/blob/main/images/The-target-page-being-loaded-by-the-Chrome-instance-controlled-by-Pydoll.png)
 
-### Step #4: Wait for the HTML Elements to Appear
+### Step #4: HTML要素が表示されるのを待つ
 
-Examine the last image from the previous step. It shows the content of the page controlled by Pydoll in the Chrome instance. You'll notice it's completely empty—no data has loaded yet.
+前のステップの最後の画像を確認してください。Pydollが制御しているChromeインスタンス内のページ内容が表示されています。データがまだ読み込まれていないため、完全に空であることに気づくはずです。
 
-This occurs because the target site dynamically renders data after a 2-second delay. While this delay is specific to the example site, waiting for page elements to render is a common requirement when [scraping SPAs (single-page applications)](https://hackernoon.com/how-to-scrape-modern-spas-pwas-and-ai-driven-dynamic-sites) and other dynamic websites that depend on AJAX.
+これは対象サイトが2秒の遅延後に動的にデータをレンダリングするために発生します。この遅延は例のサイトに固有ですが、ページ要素がレンダリングされるのを待つことは、[SPA（single-page applications）のスクレイピング](https://hackernoon.com/how-to-scrape-modern-spas-pwas-and-ai-driven-dynamic-sites)や、AJAXに依存する他の動的Webサイトをスクレイピングする際によく必要になります。
 
-Learn more in our article about [scraping dynamic websites with Python](https://brightdata.com/blog/how-tos/scrape-dynamic-websites-python).
+詳細は、[Pythonで動的Webサイトをスクレイピングする](https://brightdata.jp/blog/how-tos/scrape-dynamic-websites-python)記事をご覧ください。
 
-To handle this common scenario, Pydoll offers [built-in waiting mechanisms](https://autoscrape-labs.github.io/pydoll/deep-dive/find-elements-mixin/#waiting-mechanisms) via this method:
+この一般的なシナリオに対応するため、Pydollは次のメソッドを介して[組み込みの待機メカニズム](https://autoscrape-labs.github.io/pydoll/deep-dive/find-elements-mixin/#waiting-mechanisms)を提供します。
 
-- `wait_element()`: Waits for a single element to appear (with timeout support)
+- `wait_element()`: 単一要素の出現を待ちます（タイムアウト対応）
 
-This method supports CSS selectors, XPath expressions, and more—similar to how [Selenium's `By` object works](https://brightdata.com/blog/how-tos/using-selenium-for-web-scraping).
+このメソッドはCSSセレクタ、XPath式などをサポートしており、[Seleniumの`By`オブジェクトの動作](https://brightdata.jp/blog/how-tos/using-selenium-for-web-scraping)に似ています。
 
-Let's study the HTML structure of the target page. Open it in your browser, wait for the quotes to load, right-click one of the quotes, and select the "Inspect" option:
+対象ページのHTML構造を確認しましょう。ブラウザで開いてquotesが読み込まれるのを待ち、いずれかのquoteを右クリックして「Inspect」を選択します。
 
 ![The HTML of the quote elements](https://github.com/luminati-io/web-scraping-with-pydoll/blob/main/images/The-HTML-of-the-quote-elements.png)
 
-In the DevTools panel, you'll observe that each quote is wrapped in a `<div>` with the class `quote`. This means you can target them using the CSS selector:
+DevToolsパネルでは、各quoteが`quote`クラスを持つ`<div>`にラップされていることが分かります。つまり、次のCSSセレクタで対象にできます。
 
 ```python
 .quote
 ```
 
-Now, use Pydoll to wait for these elements to appear before proceeding:
+次に、処理を進める前にこれらの要素が表示されるまで待つようにPydollを設定します。
 
 ```python
 await page.wait_element(By.CSS_SELECTOR, ".quote", timeout=3)
 ```
 
-Don't forget to import `By`:
+`By`のimportも忘れないでください。
 
 ```python
 from pydoll.constants import By
 ```
 
-Run the script again, and this time you'll notice that Pydoll waits for the quote elements to load before closing the browser.
+スクリプトを再度実行すると、今回はPydollがquote要素の読み込みを待ってからブラウザを閉じることが分かります。
 
-### Step #5: Prepare for Web Scraping
+### Step #5: Webスクレイピングの準備
 
-Remember, the target page contains multiple quotes. Since you want to extract all of them, you need a data structure to store this information. A simple array works perfectly, so initialize one:
+対象ページには複数のquoteが含まれていることを思い出してください。すべてを抽出したいので、この情報を保存するデータ構造が必要です。シンプルな配列で十分なので、初期化します。
 
 ```python
 quotes = []
 ```
 
-To [locate elements on the page](https://autoscrape-labs.github.io/pydoll/deep-dive/find-elements-mixin/#findelementsmixin-architecture), Pydoll provides two useful methods:
+Pydollは[ページ上の要素を特定する](https://autoscrape-labs.github.io/pydoll/deep-dive/find-elements-mixin/#findelementsmixin-architecture)ために、便利な2つのメソッドを提供します。
 
-- `find_element()`: Locates the first matching element
-- `find_elements()`: Locates all matching elements
+- `find_element()`: 最初に一致する要素を特定します
+- `find_elements()`: 一致するすべての要素を特定します
 
-Just like with `wait_element()`, these methods accept a selector using the `By` object.
+`wait_element()`と同様に、これらのメソッドは`By`オブジェクトを使ってセレクタを受け取ります。
 
-So, select all quote elements on the page with:
+したがって、ページ上のすべてのquote要素を次で選択します。
 
 ```python
 quote_elements = await page.find_elements(By.CSS_SELECTOR, ".quote")
 ```
 
-Next, iterate through the elements and prepare to apply your scraping logic:
+次に、要素を反復し、スクレイピングロジックを適用する準備をします。
 
 ```python
 for quote_element in quote_elements:
   # Scraping logic...
 ```
 
-### Step #6: Implement the Data Parsing Logic
+### Step #6: データパースのロジックを実装する
 
-Begin by examining a single quote element:
+まず、単一のquote要素を確認します。
 
 ![The HTML of a quote element](https://github.com/luminati-io/web-scraping-with-pydoll/blob/main/images/The-HTML-of-a-quote-element.png)
 
-As evident from the HTML above, each quote element contains:
+上のHTMLから分かるとおり、各quote要素には次が含まれます。
 
-- The text quote in a `.text` node
-- The author in the `.author` element
-- A list of tags in the `.tag` elements
+- `.text`ノード内のquoteテキスト
+- `.author`要素内の著者
+- `.tag`要素内のタグ一覧
 
-Implement the scraping logic to select these elements and extract the relevant data:
+これらの要素を選択し、関連データを抽出するスクレイピングロジックを実装します。
 
 ```python
 # Extract the quote text (and remove curly quotes)
@@ -229,9 +229,9 @@ tag_elements = await quote_element.find_elements(By.CSS_SELECTOR, ".tag")
 tags = [await tag_element.get_element_text() for tag_element in tag_elements]
 ```
 
-**Note**: The [`replace()`](https://docs.python.org/3/library/stdtypes.html#str.replace) method removes the unnecessary curly double quotes from the extracted quote text.
+**Note**: [`replace()`](https://docs.python.org/3/library/stdtypes.html#str.replace)メソッドは、抽出したquoteテキストから不要な波括弧付きの二重引用符を削除します。
 
-Now, use the scraped data to create a new dictionary object and add it to the `quotes` array:
+次に、スクレイピングしたデータを使って新しい辞書オブジェクトを作成し、`quotes`配列に追加します。
 
 ```python
 # Populate a new quote with the scraped data
@@ -244,11 +244,11 @@ quote = {
 quotes.append(quote)
 ```
 
-### Step #7: Export to CSV
+### Step #7: CSVにエクスポートする
 
-Currently, the scraped data resides in a Python list. Make it easier to share and analyze by exporting it to a human-readable format like CSV.
+現在、スクレイピングしたデータはPythonのリストに格納されています。CSVのような人が読みやすい形式にエクスポートして、共有と分析を容易にします。
 
-Use Python to generate a new file named `quotes.csv` and populate it with the extracted data:
+Pythonを使って`quotes.csv`という新しいファイルを生成し、抽出したデータを埋め込みます。
 
 ```python
 with open("quotes.csv", "w", newline="", encoding="utf-8") as csvfile:
@@ -262,15 +262,15 @@ with open("quotes.csv", "w", newline="", encoding="utf-8") as csvfile:
                 writer.writerow(quote)
 ```
 
-Remember to import [`csv`](https://docs.python.org/3/library/csv.html) from the Python Standard Library:
+Python標準ライブラリから[`csv`](https://docs.python.org/3/library/csv.html)をimportすることを忘れないでください。
 
 ```python
 import csv
 ```
 
-### Step #8: Put It All Together
+### Step #8: まとめて完成させる
 
-The complete `scraper.py` file should now contain:
+完全な`scraper.py`ファイルは次のようになります。
 
 ```python
 import asyncio
@@ -334,42 +334,42 @@ async def main():
 asyncio.run(main())
 ```
 
-Test the script by executing:
+次を実行してスクリプトをテストします。
 
 ```sh
 python scraper.py
 ```
 
-Once completed, a `quotes.csv` file will appear in your project folder.
+完了すると、プロジェクトフォルダ内に`quotes.csv`ファイルが生成されます。
 
 ![The output data in quotes.csv](https://github.com/luminati-io/web-scraping-with-pydoll/blob/main/images/The-output-data-in-the-quotes-csv.png)
 
-## Bypassing Cloudflare With Pydoll
+## PydollでCloudflareをバイパスする
 
-When interacting with websites through browser automation tools, one of the [major challenges](https://brightdata.com/blog/web-data/web-scraping-challenges) you'll encounter is [web application firewalls (WAFs)](https://www.cloudflare.com/learning/ddos/glossary/web-application-firewall-waf/), such as Cloudflare.
+ブラウザ自動化ツールを通じてWebサイトとやり取りする際に直面する[主要な課題](https://brightdata.jp/blog/web-data/web-scraping-challenges)の1つは、Cloudflareのような[Web application firewalls（WAFs）](https://www.cloudflare.com/learning/ddos/glossary/web-application-firewall-waf/)です。
 
-When your requests are identified as coming from an automated browser, these systems often display a CAPTCHA. In certain cases, they present it to all visitors during their initial visit to the site.
+リクエストが自動化ブラウザからのものだと識別されると、これらのシステムはしばしばCAPTCHAを表示します。場合によっては、サイトへの初回アクセス時にすべての訪問者へ提示します。
 
-[Bypassing CAPTCHAs in Python](https://brightdata.com/blog/web-data/bypass-captchas-with-python) is challenging. However, techniques exist to convince Cloudflare you're a legitimate user, preventing CAPTCHA challenges from appearing initially. Pydoll addresses this by providing a dedicated API for exactly this purpose.
+[PythonでCAPTCHAをバイパスする](https://brightdata.jp/blog/web-data/bypass-captchas-with-python)のは難しいです。しかし、Cloudflareに正当なユーザーだと納得させ、最初からCAPTCHAチャレンジが表示されないようにする手法は存在します。Pydollはこの目的のために専用APIを提供することで対応しています。
 
-To demonstrate this functionality, we'll use the "[Antibot Challenge](https://www.scrapingcourse.com/antibot-challenge)" test page from the ScrapingCourse website:
+この機能をデモするために、ScrapingCourseサイトの「[Antibot Challenge](https://www.scrapingcourse.com/antibot-challenge)」テストページを使用します。
 
 ![Automatic Cloudflare verification on the target page](https://github.com/luminati-io/web-scraping-with-pydoll/blob/main/images/Automatic-Cloudflare-verification-on-the-target-page.gif)
 
-As shown, the page consistently performs the [Cloudflare JavaScript Challenge](https://hackernoon.com/bypassing-javascript-challenges-for-effective-web-scraping). After bypassing it, sample content appears confirming that the anti-bot protection has been defeated.
+表示されているとおり、このページは一貫して[Cloudflare JavaScript Challenge](https://hackernoon.com/bypassing-javascript-challenges-for-effective-web-scraping)を実行します。バイパス後、アンチボット保護が突破されたことを確認できるサンプルコンテンツが表示されます。
 
-Pydoll offers two approaches for handling Cloudflare:
+PydollはCloudflareに対応するために2つのアプローチを提供します。
 
-1. [Context manager approach](https://autoscrape-labs.github.io/pydoll/features/#context-manager-approach-synchronous): Manages the anti-bot challenge synchronously, pausing script execution until the challenge is resolved.
-2. [Background processing approach](https://autoscrape-labs.github.io/pydoll/features/#background-processing-approach): Handles the anti-bot asynchronously in the background.
+1. [コンテキストマネージャアプローチ](https://autoscrape-labs.github.io/pydoll/features/#context-manager-approach-synchronous): アンチボットチャレンジを同期的に処理し、解決するまでスクリプト実行を一時停止します。
+2. [バックグラウンド処理アプローチ](https://autoscrape-labs.github.io/pydoll/features/#background-processing-approach): アンチボットをバックグラウンドで非同期に処理します。
 
-We'll cover both methods. However, as mentioned in the official documentation, be aware that Cloudflare bypassing isn't guaranteed. Factors like IP reputation or browsing history can affect success.
+両方の方法を取り上げます。ただし公式ドキュメントで述べられているとおり、Cloudflareのバイパスは保証されません。IPレピュテーションや閲覧履歴などの要因が成功に影響します。
 
-For more sophisticated techniques, check our comprehensive tutorial on [scraping Cloudflare-protected sites](https://brightdata.com/blog/web-data/bypass-cloudflare-for-web-scraping).
+より高度な手法については、[Cloudflare保護サイトのスクレイピング](https://brightdata.jp/blog/web-data/bypass-cloudflare-for-web-scraping)に関する包括的チュートリアルをご覧ください。
 
-### Context Manager Approach
+### コンテキストマネージャアプローチ
 
-To let Pydoll automatically handle the Cloudflare anti-bot challenge, use the `expect_and_bypass_cloudflare_captcha()` method like this:
+PydollにCloudflareのアンチボットチャレンジを自動的に処理させるには、`expect_and_bypass_cloudflare_captcha()`メソッドを次のように使用します。
 
 ```python
 import asyncio
@@ -400,9 +400,9 @@ async def main():
 asyncio.run(main())
 ```
 
-When you execute this script, the Chrome window will automatically overcome the challenge and load the target page.
+このスクリプトを実行すると、Chromeウィンドウが自動的にチャレンジを突破して対象ページを読み込みます。
 
-The output will be:
+出力は次のとおりです。
 
 ```
 Waiting for Cloudflare anti-bot to be handled...
@@ -410,9 +410,9 @@ Cloudflare anti-bot bypassed! Continuing with automation...
 You bypassed the Antibot challenge! :D
 ```
 
-### Background Processing Approach
+### バックグラウンド処理アプローチ
 
-If you prefer not to halt script execution while Pydoll addresses the Cloudflare challenge, you can utilize the `enable_auto_solve_cloudflare_captcha()` and `disable_auto_solve_cloudflare_captcha()` methods like this:
+PydollがCloudflareチャレンジに対処している間にスクリプト実行を停止したくない場合は、`enable_auto_solve_cloudflare_captcha()`および`disable_auto_solve_cloudflare_captcha()`メソッドを次のように使用できます。
 
 ```python
 import asyncio
@@ -444,76 +444,76 @@ async def main():
 asyncio.run(main())
 ```
 
-This approach enables your scraper to perform other operations while Pydoll resolves the Cloudflare anti-bot challenge in the background.
+このアプローチにより、PydollがバックグラウンドでCloudflareアンチボットチャレンジを解決している間、スクレイパーは他の操作を実行できます。
 
-This time, the output will be:
+この場合の出力は次のとおりです。
 
 ```
 Page loaded, Cloudflare anti-bot will be handled in the background...
 You bypassed the Antibot challenge! :D
 ```
 
-## Limitations of This Approach to Web Scraping
+## このWebスクレイピング手法の制限
 
-With Pydoll—or any [scraping tool](https://brightdata.com/blog/web-data/best-web-scraping-tools)—sending too many requests can likely result in being blocked by the target server. This happens because most websites implement rate limiting to prevent bots (like your scraping script) from overwhelming their servers with excessive requests.
+Pydoll（または任意の[スクレイピングツール](https://brightdata.jp/blog/web-data/best-web-scraping-tools)）でリクエストを送りすぎると、対象サーバーからブロックされる可能性が高いです。これは、多くのWebサイトが、過剰なリクエストによってサーバーが圧迫されるのを防ぐためにレート制限を実装しているためです（あなたのスクレイピングスクリプトのようなボットを防ぐ目的です）。
 
-This represents a [standard anti-scraping](https://brightdata.com/blog/web-data/anti-scraping-techniques) and anti-DDoS strategy. Understandably, website owners want to protect their sites from automated traffic floods.
+これは[標準的なアンチスクレイピング](https://brightdata.jp/blog/web-data/anti-scraping-techniques)およびanti-DDoS戦略です。Webサイト運営者が自動化トラフィックの洪水からサイトを守りたいのは当然です。
 
-Even when following best practices such as [respecting `robots.txt`](https://brightdata.com/blog/how-tos/robots-txt-for-web-scraping-guide), making numerous requests from a single IP address can still trigger suspicion. Consequently, you might encounter [`403 Forbidden`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/403) or [`429 Too Many Requests`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/429) errors.
+[`robots.txt`を尊重する](https://brightdata.jp/blog/how-tos/robots-txt-for-web-scraping-guide)などのベストプラクティスに従っていても、単一のIPアドレスから多数のリクエストを送ると疑わしい挙動として検知されることがあります。その結果、[`403 Forbidden`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/403)や[`429 Too Many Requests`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/429)エラーに遭遇する可能性があります。
 
-The most effective solution is rotating your IP address using a web proxy.
+最も効果的な解決策は、Webプロキシを使ってIPアドレスをローテーションすることです。
 
-For those unfamiliar with this concept, a [web proxy](https://brightdata.com/blog/proxy-101/what-is-proxy-server) functions as an intermediary between your scraper and the target website. It forwards your requests and returns responses, making it appear to the target site that traffic originates from the proxy—not your actual device.
+この概念に馴染みがない方のために説明すると、[Webプロキシ](https://brightdata.jp/blog/proxy-101/what-is-proxy-server)は、スクレイパーと対象Webサイトの間に入る仲介役として機能します。リクエストを転送してレスポンスを返すため、対象サイトからはトラフィックがあなたの実デバイスではなくプロキシから発生しているように見えます。
 
-This technique not only helps conceal your real IP but also assists in bypassing geo-restrictions and [numerous other applications](https://brightdata.com/use-cases).
+この手法は実IPを隠すだけでなく、ジオ制限の回避や[その他多くの用途](https://brightdata.jp/use-cases)にも役立ちます。
 
-Various [proxy types exist](https://brightdata.com/blog/proxy-101/ultimate-guide-to-proxy-types). To avoid blocking, you need a premium provider offering authentic rotating proxies like Bright Data.
+[プロキシの種類](https://brightdata.jp/blog/proxy-101/ultimate-guide-to-proxy-types)にはさまざまなものがあります。ブロックを避けるには、Bright Dataのように本物のローテーティングプロキシを提供するプレミアムプロバイダが必要です。
 
-In the following section, you'll learn how to combine [Bright Data's rotating proxies](https://brightdata.com/solutions/rotating-proxies) with Pydoll for more effective web scraping—particularly at scale.
+次のセクションでは、より効果的なWebスクレイピング（特にスケール時）を実現するために、Pydollと[Bright Dataのローテーティングプロキシ](https://brightdata.jp/solutions/rotating-proxies)を組み合わせる方法を学びます。
 
-## Integrating Pydoll with Bright Data's Rotating Proxies
+## PydollとBright Dataのローテーティングプロキシの統合
 
-Let's implement Bright Data's residential proxies with Pydoll.
+PydollでBright Dataのレジデンシャルプロキシを実装しましょう。
 
-If you don't have an account yet, [register for Bright Data](https://brightdata.com/cp/start). Otherwise, proceed and sign in to access your dashboard:
+まだアカウントをお持ちでない場合は、[Bright Dataに登録](https://brightdata.jp/cp/start)してください。すでにある場合は、サインインしてダッシュボードにアクセスします。
 
 ![The Bright Data dashboard](https://github.com/luminati-io/web-scraping-with-pydoll/blob/main/images/The-Bright-Data-dashboard-1.png)
 
-From the dashboard, select the "Get proxy products" button:
+ダッシュボードから「Get proxy products」ボタンを選択します。
 
 ![Get proxy products](https://github.com/luminati-io/web-scraping-with-pydoll/blob/main/images/Clicking-the-Get-proxy-products-button.png)
 
-You'll be directed to the "Proxies & Scraping Infrastructure" page:
+「Proxies & Scraping Infrastructure」ページに移動します。
 
 ![The "Proxies & Scraping Infrastructure" page](https://github.com/luminati-io/web-scraping-with-pydoll/blob/main/images/The-Proxies-Scraping-Infrastructure-page-1.png)
 
-In the table, locate the "Residential" row and click it:
+表の中で「Residential」行を見つけてクリックします。
 
 ![Clicking the "residential" row](https://github.com/luminati-io/web-scraping-with-pydoll/blob/main/images/Clicking-the-residential-row.png)
 
-You'll arrive at the residential proxy configuration page:
+レジデンシャルプロキシの設定ページに移動します。
 
 ![The "residential" page](https://github.com/luminati-io/web-scraping-with-pydoll/blob/main/images/The-residential-page.png)
 
-For first-time users, follow the setup wizard to configure the proxy according to your requirements.
+初回利用者は、セットアップウィザードに従って要件に応じてプロキシを設定してください。
 
-Navigate to the "Overview" tab and find your proxy's host, port, username, and password:
+「Overview」タブに移動し、プロキシのhost、port、username、passwordを確認します。
 
 ![The proxy credentials](https://github.com/luminati-io/web-scraping-with-pydoll/blob/main/images/The-proxy-credentials.png)
 
-Utilize those details to construct your proxy URL:
+それらの情報を使ってプロキシURLを構築します。
 
 ```
 proxy_url = "<brightdata_proxy_username>:<brightdata_proxy_password>@<brightdata_proxy_host>:<brightdata_proxy_port>";
 ```
 
-Replace the placeholders (`<brightdata_proxy_username>`, `<brightdata_proxy_password>`, `<brightdata_proxy_host>`, `<brightdata_proxy_port>`) with your actual proxy credentials.
+プレースホルダー（`<brightdata_proxy_username>`, `<brightdata_proxy_password>`, `<brightdata_proxy_host>`, `<brightdata_proxy_port>`）は実際のプロキシ認証情報に置き換えてください。
 
-Ensure you activate the proxy product by switching the toggle from "Off" to "On":
+トグルを「Off」から「On」に切り替えて、プロキシプロダクトを有効化してください。
 
 ![Clicking the activation toggle](https://github.com/luminati-io/web-scraping-with-pydoll/blob/main/images/Clicking-the-activation-toggle.png)
 
-With your proxy configured, here's how to incorporate it into Pydoll using its [built-in proxy configuration capabilities](https://autoscrape-labs.github.io/pydoll/features/#proxy-integration):
+プロキシの設定ができたら、Pydollの[組み込みプロキシ設定機能](https://autoscrape-labs.github.io/pydoll/features/#proxy-integration)を使って統合する方法は次のとおりです。
 
 ```python
 import asyncio
@@ -553,23 +553,23 @@ async def main():
 asyncio.run(main())
 ```
 
-Each time you run this script, you'll observe a different exit IP address, thanks to Bright Data's proxy rotation.
+このスクリプトを実行するたびに、Bright Dataのプロキシローテーションにより、異なる出口IPアドレスが表示されるのを確認できます。
 
 > **Note**:
 > 
-> Typically, Chrome's `--proxy-server` flag doesn't support authenticated proxies directly. However, [Pydoll's advanced proxy manager](https://autoscrape-labs.github.io/pydoll/deep-dive/browser-domain/#proxy-manager) overcomes this limitation, allowing password-protected proxy server usage.
+> 通常、Chromeの`--proxy-server`フラグは認証付きプロキシを直接サポートしません。しかし、[Pydollの高度なプロキシマネージャ](https://autoscrape-labs.github.io/pydoll/deep-dive/browser-domain/#proxy-manager)によりこの制限が解消され、パスワード保護されたプロキシサーバーを使用できます。
 
-## Alternatives to Pydoll for Web Scraping
+## WebスクレイピングにおけるPydollの代替手段
 
-While Pydoll is certainly a powerful web scraping library, especially for browser automation with built-in anti-bot circumvention features, other valuable tools exist.
+Pydollは確かに強力なWebスクレイピングライブラリであり、特にアンチボット回避機能が組み込まれたブラウザ自動化において有用ですが、他にも有益なツールは存在します。
 
-Here are several strong Pydoll alternatives worth exploring:
+検討する価値があるPydollの代替手段をいくつかご紹介します。
 
-- [**SeleniumBase**](https://brightdata.com/blog/web-data/web-scraping-with-seleniumbase): A Python framework built upon Selenium/WebDriver APIs, providing a professional-grade toolkit for web automation. It supports everything from end-to-end testing to sophisticated scraping workflows.
-- [**Undetected ChromeDriver**](https://brightdata.com/blog/web-data/web-scraping-with-undetected-chromedriver): A modified version of ChromeDriver engineered to avoid detection by popular anti-bot services like Imperva, DataDome, and Distil Networks. Ideal for stealthy scraping when using Selenium.
+- [**SeleniumBase**](https://brightdata.jp/blog/web-data/web-scraping-with-seleniumbase): Selenium/WebDriver API上に構築されたPythonフレームワークで、Web自動化のためのプロフェッショナル向けツールキットを提供します。E2Eテストから高度なスクレイピングワークフローまで対応します。
+- [**Undetected ChromeDriver**](https://brightdata.jp/blog/web-data/web-scraping-with-undetected-chromedriver): Imperva、DataDome、Distil Networksなどの代表的なアンチボットサービスによる検知を回避するよう設計された、ChromeDriverの改変版です。Seleniumを使用する際に、ステルス性の高いスクレイピングに最適です。
 
-## Conclusion
+## 結論
 
-Using Pydoll without IP rotation mechanisms can lead to inconsistent results. To make web scraping reliable and scalable, try Bright Data's [proxy networks](https://brightdata.com/proxy-types) that include datacenter proxies, residential proxies, ISP proxies, and mobile proxies.
+IPローテーションの仕組みなしでPydollを使用すると、結果が安定しない可能性があります。Webスクレイピングを信頼性が高くスケーラブルにするために、データセンタープロキシ、レジデンシャルプロキシ、ISPプロキシ、モバイルプロキシを含むBright Dataの[プロキシネットワーク](https://brightdata.jp/proxy-types)をお試しください。
 
-Create an account and begin testing our proxies at no cost today!
+アカウントを作成して、今すぐ無料でプロキシのテストを開始しましょう！
